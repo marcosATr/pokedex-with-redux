@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,400;0,700;1,400&display=swap');
@@ -29,12 +29,21 @@ const GlobalStyles = createGlobalStyle`
     --poke-color-poison-psychic-fairty: #A974BC;
     --poke-color-ground: #9B897B;
     --poke-color-eletric: #F7C545;
+
+    font-size:13px;
+
+    @media (min-width: 768px) { 
+      font-size:15px;
+     }
+    @media (min-width: 992px) { 
+      font-size:16px
+    }
   }
 
   /* img {
     width: 100%;
     height: auto;
   } */
-`
+`;
 
 export { GlobalStyles };
