@@ -1,14 +1,14 @@
-import Header from "./components/header/Header";
 import { GlobalStyles } from "./styles/GlobalStyles";
-import { BrowserRouter as Router } from "react-router-dom";
-import Home from "./components/home/Home";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Homepage from "./pages/Homepage";
 
 function App() {
   return (
     <>
       <Router>
-        <Header />
-        <Home />
+        <Routes>
+          <Route exact path="/" element={<Homepage />} />
+        </Routes>
         <GlobalStyles />
       </Router>
     </>
