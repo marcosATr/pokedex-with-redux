@@ -104,9 +104,10 @@ const HomeImage = styled.div`
     margin: 1rem 0;
 
     @media (min-width: 992px) {
-      max-width: 125%;
+      max-width: 118%;
+      max-height:100vh;
       height: auto;
-      margin: 0;
+      margin: 0 0 0 40px;;
     }
   }
 `;
