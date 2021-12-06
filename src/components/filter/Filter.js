@@ -36,9 +36,13 @@ const FilterBar = styled.input`
   width: 100%;
 `;
 const Filters = styled.div`
-  margin-top:2rem;
+  margin-top: 2rem;
   margin-bottom: 1rem;
-`
+  display: flex;
+  & > div + div {
+    margin-left: 4rem;
+  }
+`;
 
 const SelectBox = styled.div`
   background-color: #f2f2f2;
@@ -46,7 +50,7 @@ const SelectBox = styled.div`
   position: relative;
   font-size: 0.8rem;
   font-weight: normal;
-  width: 135px;
+  width: 150px;
   /* height:135px; */
   padding: 0.5rem;
   text-align: center;
@@ -57,7 +61,7 @@ const SelectBox = styled.div`
 `;
 
 const SelectItems = styled.div`
-  width: 135px;
+  width: 150px;
   background-color: #f2f2f2;
   /* border-radius: 4px; */
   scrollbar-color: var(--color-primary) #f2f2f2;
@@ -89,6 +93,23 @@ const SelectItems = styled.div`
   }
 `;
 
+const SelectionFilterWrapper = (props) => {
+  return (
+    <SelectBox>
+      <span>{props.name}</span>
+      <img src="/img/ArrowFilter.png" alt="chevron" />
+      <SelectItems>
+        {props.populate.map((item) => (
+          <div key={item.name}>
+            <input type="checkbox" id={item.name} name={item.name} />
+            <label htmlFor={item.name}>{item.name}</label>
+          </div>
+        ))}
+      </SelectItems>
+    </SelectBox>
+  );
+};
+
 //fetch
 // const getTypes = async () => {
 //   const types = await fetch("https://pokeapi.co/api/v2/type/").then((res) => res.json());
@@ -118,6 +139,16 @@ export default function Filter() {
     { name: "unknown", url: "https://pokeapi.co/api/v2/type/10001/" },
     { name: "shadow", url: "https://pokeapi.co/api/v2/type/10002/" },
   ];
+  const gens = [
+    { name: "generation-i", url: "https://pokeapi.co/api/v2/generation/1/" },
+    { name: "generation-ii", url: "https://pokeapi.co/api/v2/generation/2/" },
+    { name: "generation-iii", url: "https://pokeapi.co/api/v2/generation/3/" },
+    { name: "generation-iv", url: "https://pokeapi.co/api/v2/generation/4/" },
+    { name: "generation-v", url: "https://pokeapi.co/api/v2/generation/5/" },
+    { name: "generation-vi", url: "https://pokeapi.co/api/v2/generation/6/" },
+    { name: "generation-vii", url: "https://pokeapi.co/api/v2/generation/7/" },
+    { name: "generation-viii", url: "https://pokeapi.co/api/v2/generation/8/" },
+  ];
 
   return (
     <>
@@ -128,18 +159,8 @@ export default function Filter() {
           </Title>
           <FilterBar />
           <Filters>
-            <SelectBox>
-              <span>Type</span>
-              <img src="/img/ArrowFilter.png" alt="chevron" />
-              <SelectItems populate={typeArray}>
-                {props.populate.map((item) => (
-                  <div key={item.name}>
-                    <input type="checkbox" id={item.name} name={item.name} />
-                    <label htmlFor={item.name}>{item.name}</label>
-                  </div>
-                ))}
-              </SelectItems>
-            </SelectBox>
+            <SelectionFilterWrapper name="type" populate={typeArray}></SelectionFilterWrapper>
+            <SelectionFilterWrapper name="Generation" populate={gens}></SelectionFilterWrapper>
           </Filters>
         </div>
       </Container>
