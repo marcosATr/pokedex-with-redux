@@ -1,5 +1,8 @@
 import { Container } from "../helpers/container";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import { openDropDown, closeDropDown } from "../../actions";
+
 //https://pokeapi.co/api/v2/type/
 const Title = styled.h2`
   font-size: 1.6rem;
@@ -45,19 +48,27 @@ const Filters = styled.div`
 `;
 
 const SelectBox = styled.div`
-  background-color: #f2f2f2;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   position: relative;
   font-size: 0.8rem;
   font-weight: normal;
-  width: 150px;
   /* height:135px; */
-  padding: 0.5rem;
-  text-align: center;
+  /* text-align: center;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
+  justify-content: space-evenly; */
+`;
+
+const ToggleHandle = styled.div`
+  width: 150px;
   border-radius: 4px;
+  padding: 0.5rem;
+  background-color: #f2f2f2;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
 `;
 
 const SelectItems = styled.div`
@@ -94,19 +105,31 @@ const SelectItems = styled.div`
 `;
 
 const SelectionFilterWrapper = (props) => {
+  const dispatch = useDispatch();
+  const dropdownIsOpen = useSelector((state) => state.toggleDropdown);
   return (
-    <SelectBox>
-      <span>{props.name}</span>
-      <img src="/img/ArrowFilter.png" alt="chevron" />
-      <SelectItems>
-        {props.populate.map((item) => (
-          <div key={item.name}>
-            <input type="checkbox" id={item.name} name={item.name} />
-            <label htmlFor={item.name}>{item.name}</label>
-          </div>
-        ))}
-      </SelectItems>
-    </SelectBox>
+    <>
+      <SelectBox>
+        <ToggleHandle
+          onClick={() => {
+            dropdownIsOpen === true ? dispatch(closeDropDown()) : dispatch(openDropDown());
+          }}
+        >
+          <span>{props.name}</span>
+          <img src="/img/ArrowFilter.png" alt="chevron" />
+        </ToggleHandle>
+        {props.dropdownIsOpen && (
+          <SelectItems>
+            {props.populate.map((item) => (
+              <div key={item.name}>
+                <input type="checkbox" id={item.name} name={item.name} />
+                <label htmlFor={item.name}>{item.name}</label>
+              </div>
+            ))}
+          </SelectItems>
+        )}
+      </SelectBox>
+    </>
   );
 };
 
@@ -117,6 +140,9 @@ const SelectionFilterWrapper = (props) => {
 // };
 
 export default function Filter() {
+  //Estado do DropDown do filter:
+  const dropdownIsOpen = useSelector((state) => state.toggleDropdown);
+
   const typeArray = [
     { name: "normal", url: "https://pokeapi.co/api/v2/type/1/" },
     { name: "fighting", url: "https://pokeapi.co/api/v2/type/2/" },
@@ -159,7 +185,7 @@ export default function Filter() {
           </Title>
           <FilterBar />
           <Filters>
-            <SelectionFilterWrapper name="type" populate={typeArray}></SelectionFilterWrapper>
+            <SelectionFilterWrapper name="Type" populate={typeArray} dropdownIsOpen={dropdownIsOpen}></SelectionFilterWrapper>
             <SelectionFilterWrapper name="Generation" populate={gens}></SelectionFilterWrapper>
           </Filters>
         </div>
