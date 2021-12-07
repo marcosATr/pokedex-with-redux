@@ -1,11 +1,11 @@
-export const openDropDown = () => {
+export const openDropDown = (namespace) => {
   return {
-    type: "OPEN_DROPDOWN"
+    type: `${namespace}/OPEN_DROPDOWN`
   }
 }
 
-export const closeDropDown = () => {
+export const closeDropDown = (namespace) => {
   return {
-    type: "CLOSE_DROPDOWN"
+    type: `${namespace}/CLOSE_DROPDOWN`
   }
 }

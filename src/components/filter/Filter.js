@@ -103,22 +103,27 @@ const SelectItems = styled.div`
     }
   }
 `;
+const addDropdown = () => {
 
+}
+const removeDropdown = () => {
+  
+}
 const SelectionFilterWrapper = (props) => {
   const dispatch = useDispatch();
-  const dropdownIsOpen = useSelector((state) => state.toggleDropdown);
+  const dropdownIsOpen = useSelector((state) => state[`${props.dropdownType}`]);
   return (
     <>
       <SelectBox>
         <ToggleHandle
-          onClick={() => {
-            dropdownIsOpen === true ? dispatch(closeDropDown()) : dispatch(openDropDown());
+          onClick={(e) => {
+            dropdownIsOpen === true ? dispatch(closeDropDown(props.dropdownType)) : dispatch(openDropDown(props.dropdownType));
           }}
         >
           <span>{props.name}</span>
           <img src="/img/ArrowFilter.png" alt="chevron" />
         </ToggleHandle>
-        {props.dropdownIsOpen && (
+        {dropdownIsOpen && (
           <SelectItems>
             {props.populate.map((item) => (
               <div key={item.name}>
@@ -141,7 +146,6 @@ const SelectionFilterWrapper = (props) => {
 
 export default function Filter() {
   //Estado do DropDown do filter:
-  const dropdownIsOpen = useSelector((state) => state.toggleDropdown);
 
   const typeArray = [
     { name: "normal", url: "https://pokeapi.co/api/v2/type/1/" },
@@ -185,8 +189,8 @@ export default function Filter() {
           </Title>
           <FilterBar />
           <Filters>
-            <SelectionFilterWrapper name="Type" populate={typeArray} dropdownIsOpen={dropdownIsOpen}></SelectionFilterWrapper>
-            <SelectionFilterWrapper name="Generation" populate={gens}></SelectionFilterWrapper>
+            <SelectionFilterWrapper name="Type" populate={typeArray} dropdownType="toggleDropdownType"></SelectionFilterWrapper>
+            <SelectionFilterWrapper name="Generation" populate={gens} dropdownType="toggleDropdownGeneration"></SelectionFilterWrapper>
           </Filters>
         </div>
       </Container>
