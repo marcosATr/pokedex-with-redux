@@ -9,3 +9,10 @@ export const closeDropDown = (namespace) => {
     type: `${namespace}/CLOSE_DROPDOWN`
   }
 }
+
+export const storePkmnData = (payload) => {
+  return {
+    type: `STORE_PKMN_DATA`,
+    payload: payload
+  }
+}
