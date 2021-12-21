@@ -103,28 +103,60 @@ const SelectItems = styled.div`
     }
   }
 `;
-const addDropdown = () => {
 
-}
-const removeDropdown = () => {
-  
-}
 const SelectionFilterWrapper = (props) => {
-  const dispatch = useDispatch();
+  // let target;
   const dropdownIsOpen = useSelector((state) => state[`${props.dropdownType}`]);
+  const dispatch = useDispatch();
+
+  const removeDropdown = () => {
+    dispatch(closeDropDown(props.dropdownType));
+    document.removeEventListener("mousedown", handleClick);
+  };
+
+  const addDropdown = () => {
+    if (!dropdownIsOpen) {
+      dispatch(openDropDown(props.dropdownType));
+      document.addEventListener("mousedown", handleClick);
+    } else {
+      console.log('else happened')
+      document.removeEventListener("mousedown", handleClick);
+      
+    }
+  };
+  const handleClick = (e) => {
+    e.stopImmediatePropagation();
+    e.stopPropagation();
+    const target = document.querySelector(".select-box");
+    const handle = document.querySelector(".select-handle");
+    console.log('target', target, handle)
+    if (!target.contains(e.target)) {
+      removeDropdown()
+    }
+    // console.log(handle.childElementCount);
+    // e.preventDefault();
+    // console.log("e.target === handle", e.target.parentNode === target.parentNode);
+    // if (handle.childElementCount > 1 || e.target === handle || !target.contains(e.target)) {
+    //   console.log(target.contains(e.target), target, e.target);
+    //   removeDropdown();
+    // } else {
+    //   console.log("dropdownIsOpen", dropdownIsOpen);
+    // }
+  };
+
   return (
     <>
-      <SelectBox>
+      <SelectBox className="select-handle">
         <ToggleHandle
           onClick={(e) => {
-            dropdownIsOpen === true ? dispatch(closeDropDown(props.dropdownType)) : dispatch(openDropDown(props.dropdownType));
+            if(!dropdownIsOpen) addDropdown();
           }}
         >
           <span>{props.name}</span>
           <img src="/img/ArrowFilter.png" alt="chevron" />
         </ToggleHandle>
         {dropdownIsOpen && (
-          <SelectItems>
+          <SelectItems className="select-box">
             {props.populate.map((item) => (
               <div key={item.name}>
                 <input type="checkbox" id={item.name} name={item.name} />
