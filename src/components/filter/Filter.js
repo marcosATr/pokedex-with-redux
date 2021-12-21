@@ -109,49 +109,42 @@ const SelectionFilterWrapper = (props) => {
   const dropdownIsOpen = useSelector((state) => state[`${props.dropdownType}`]);
   const dispatch = useDispatch();
 
-  const removeDropdown = () => {
-    dispatch(closeDropDown(props.dropdownType));
-    document.removeEventListener("mousedown", handleClick);
-  };
+  const manageClickOutside = () => {
+    const e = window.event;
+    const target = document.querySelector(".select-box");
 
-  const addDropdown = () => {
-    if (!dropdownIsOpen) {
-      dispatch(openDropDown(props.dropdownType));
-      document.addEventListener("mousedown", handleClick);
-    } else {
-      console.log('else happened')
-      document.removeEventListener("mousedown", handleClick);
-      
+    console.log("handle evoked");
+    if (target !== null) {
+      if (!target.contains(e.target)) {
+        document.removeEventListener("click", manageClickOutside);
+        console.log('removed')
+        dispatch(closeDropDown(props.dropdownType));
+      }
     }
   };
   const handleClick = (e) => {
-    e.stopImmediatePropagation();
-    e.stopPropagation();
-    const target = document.querySelector(".select-box");
-    const handle = document.querySelector(".select-handle");
-    console.log('target', target, handle)
-    if (!target.contains(e.target)) {
-      removeDropdown()
+    e.nativeEvent.stopImmediatePropagation();
+    if (dropdownIsOpen) {
+      //Se o dropdown está aberto, não faça nada, deixe que o event handler assuma o controle.
+      const target = document.querySelector(".select-box");
+      if (!target.contains(e.target)) {
+        console.log('removed')
+        document.removeEventListener("click", manageClickOutside);
+        dispatch(closeDropDown(props.dropdownType));
+      }
+    } else {
+      //Se o dropdown não está aberto, dispare a ação e adicione o o event handler, parando a propagação para garantir que o mesmo não seja disparado imediatamente.
+      // if (e.target !== target)
+      console.log('added')
+      dispatch(openDropDown(props.dropdownType));
+      document.addEventListener("click", manageClickOutside);
     }
-    // console.log(handle.childElementCount);
-    // e.preventDefault();
-    // console.log("e.target === handle", e.target.parentNode === target.parentNode);
-    // if (handle.childElementCount > 1 || e.target === handle || !target.contains(e.target)) {
-    //   console.log(target.contains(e.target), target, e.target);
-    //   removeDropdown();
-    // } else {
-    //   console.log("dropdownIsOpen", dropdownIsOpen);
-    // }
   };
 
   return (
     <>
-      <SelectBox className="select-handle">
-        <ToggleHandle
-          onClick={(e) => {
-            if(!dropdownIsOpen) addDropdown();
-          }}
-        >
+      <SelectBox className="select-handle" onClick={(e) => handleClick(e)}>
+        <ToggleHandle>
           <span>{props.name}</span>
           <img src="/img/ArrowFilter.png" alt="chevron" />
         </ToggleHandle>
@@ -221,8 +214,8 @@ export default function Filter() {
           </Title>
           <FilterBar />
           <Filters>
-            <SelectionFilterWrapper name="Type" populate={typeArray} dropdownType="toggleDropdownType"></SelectionFilterWrapper>
-            <SelectionFilterWrapper name="Generation" populate={gens} dropdownType="toggleDropdownGeneration"></SelectionFilterWrapper>
+            <SelectionFilterWrapper key={1} name="Type" populate={typeArray} dropdownType="toggleDropdownType"></SelectionFilterWrapper>
+            <SelectionFilterWrapper key={2} name="Generation" populate={gens} dropdownType="toggleDropdownGeneration"></SelectionFilterWrapper>
           </Filters>
         </div>
       </Container>
