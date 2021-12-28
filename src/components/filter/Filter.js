@@ -108,20 +108,43 @@ const SelectItems = styled.div`
 
 const SelectionFilterWrapper = (props) => {
   const dropdown = props.dropdown;
-  console.log("the dropdown is: ", dropdown);
   const dispatch = useDispatch();
   const dropdownStatus = useSelector(
     (state) => state.dropdown.value[dropdown].status
   );
-  console.log(dropdownStatus);
+
+  const manageClickOutside = () => {
+    const e = window.event;
+    const target = document.querySelector(".select-box");
+
+    console.log("removed");
+    if (target !== null) {
+      if (!target.contains(e.target)) {
+        document.removeEventListener("click", manageClickOutside);
+        dispatch(close());
+      }
+    } else {
+      document.removeEventListener("click", manageClickOutside);
+      dispatch(close());
+    }
+  };
+
+  const handleDropdown = () => {
+    dispatch(close());
+    document.removeEventListener("click", manageClickOutside);
+
+    if (dropdownStatus === "closed") {
+      dispatch(open(props.dropdown));
+      document.addEventListener("click", manageClickOutside);
+    }
+  };
   return (
     <>
       <SelectBox className="select-handle">
         <ToggleHandle
-          onClick={() => {
-            dropdownStatus === "closed"
-              ? dispatch(open(dropdown))
-              : dispatch(close());
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDropdown();
           }}
         >
           <span>{props.name}</span>
@@ -151,7 +174,7 @@ const SelectionFilterWrapper = (props) => {
 export default function Filter() {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.pokemonTypes.value.types);
-  const typesStatus = useSelector((state) => state.pokemonTypes.value.types);
+  // const typesStatus = useSelector((state) => state.pokemonTypes.value.types);
 
   useEffect(() => {
     dispatch(fetchPokemonTypes());
