@@ -117,7 +117,6 @@ const SelectionFilterWrapper = (props) => {
     const e = window.event;
     const target = document.querySelector(".select-box");
 
-    console.log("removed");
     if (target !== null) {
       if (!target.contains(e.target)) {
         document.removeEventListener("click", manageClickOutside);
