@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPokemonTypes } from "../../features/pokemonTypes";
+import { close, open } from "../../features/dropdown";
 
 //https://pokeapi.co/api/v2/type/
 const Title = styled.h2`
@@ -105,15 +106,28 @@ const SelectItems = styled.div`
   }
 `;
 
-
 const SelectionFilterWrapper = (props) => {
+  const dropdown = props.dropdown;
+  console.log("the dropdown is: ", dropdown);
+  const dispatch = useDispatch();
+  const dropdownStatus = useSelector(
+    (state) => state.dropdown.value[dropdown].status
+  );
+  console.log(dropdownStatus);
   return (
     <>
       <SelectBox className="select-handle">
-        <ToggleHandle>
+        <ToggleHandle
+          onClick={() => {
+            dropdownStatus === "closed"
+              ? dispatch(open(dropdown))
+              : dispatch(close());
+          }}
+        >
           <span>{props.name}</span>
           <img src="/img/ArrowFilter.png" alt="chevron" />
         </ToggleHandle>
+        {dropdownStatus === "open" && (
           <SelectItems className="select-box">
             {props.populate.map((item) => (
               <div key={item.name}>
@@ -122,6 +136,7 @@ const SelectionFilterWrapper = (props) => {
               </div>
             ))}
           </SelectItems>
+        )}
       </SelectBox>
     </>
   );
@@ -135,15 +150,15 @@ const SelectionFilterWrapper = (props) => {
 
 export default function Filter() {
   const dispatch = useDispatch();
-  const types = useSelector(state => state.pokemonTypes.value.types)
-  const typesStatus = useSelector(state => state.pokemonTypes.value.types)
-  
-  useEffect(()=>{
-    dispatch(fetchPokemonTypes())
-  }, [dispatch])
-  
+  const types = useSelector((state) => state.pokemonTypes.value.types);
+  const typesStatus = useSelector((state) => state.pokemonTypes.value.types);
+
+  useEffect(() => {
+    dispatch(fetchPokemonTypes());
+  }, [dispatch]);
+
   //Estado do DropDown do filter:
-  
+
   const gens = [
     { name: "generation-i", url: "https://pokeapi.co/api/v2/generation/1/" },
     { name: "generation-ii", url: "https://pokeapi.co/api/v2/generation/2/" },
@@ -164,8 +179,18 @@ export default function Filter() {
           </Title>
           <FilterBar />
           <Filters>
-            <SelectionFilterWrapper key={1} name="Type" populate={types} dropdownType="toggleDropdownType"></SelectionFilterWrapper>
-            <SelectionFilterWrapper key={2} name="Generation" populate={gens} dropdownType="toggleDropdownGeneration"></SelectionFilterWrapper>
+            <SelectionFilterWrapper
+              key={1}
+              name="Type"
+              populate={types}
+              dropdown="dropdownType"
+            ></SelectionFilterWrapper>
+            <SelectionFilterWrapper
+              key={2}
+              name="Generation"
+              populate={gens}
+              dropdown="dropdownGeneration"
+            ></SelectionFilterWrapper>
           </Filters>
         </div>
       </Container>
