@@ -171,7 +171,7 @@ const SelectionFilterWrapper = (props) => {
 
 export default function Filter() {
   //Estado do DropDown do filter:
-  const pkmnTypes = useSelector((state) => state['storePkmnDataReducer']['pkmnData']['pkmnTypes']);
+  const pkmnState = useSelector((state) => state['storePkmnDataReducer']);
 
   const typeArray = [
     { name: "normal", url: "https://pokeapi.co/api/v2/type/1/" },
@@ -215,7 +215,7 @@ export default function Filter() {
           </Title>
           <FilterBar />
           <Filters>
-            <SelectionFilterWrapper key={1} name="Type" populate={pkmnTypes} dropdownType="toggleDropdownType"></SelectionFilterWrapper>
+            <SelectionFilterWrapper key={1} name="Type" populate={pkmnState.pkmnData.pkmnTypes} dropdownType="toggleDropdownType"></SelectionFilterWrapper>
             <SelectionFilterWrapper key={2} name="Generation" populate={gens} dropdownType="toggleDropdownGeneration"></SelectionFilterWrapper>
           </Filters>
         </div>
