@@ -1,7 +1,8 @@
 import { Container } from "../helpers/container";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { openDropDown, closeDropDown } from "../../actions";
+import { useEffect } from "react";
+import { fetchPokemonTypes } from "../../features/pokemonTypes";
 
 //https://pokeapi.co/api/v2/type/
 const Title = styled.h2`
@@ -104,51 +105,15 @@ const SelectItems = styled.div`
   }
 `;
 
+
 const SelectionFilterWrapper = (props) => {
-  // let target;
-  const dropdownIsOpen = useSelector((state) => state[`${props.dropdownType}`]);
-  const dispatch = useDispatch();
-
-  const manageClickOutside = () => {
-    const e = window.event;
-    const target = document.querySelector(".select-box");
-
-    console.log("handle evoked");
-    if (target !== null) {
-      if (!target.contains(e.target)) {
-        document.removeEventListener("click", manageClickOutside);
-        console.log('removed')
-        dispatch(closeDropDown(props.dropdownType));
-      }
-    }
-  };
-  const handleClick = (e) => {
-    e.nativeEvent.stopImmediatePropagation();
-    if (dropdownIsOpen) {
-      //Se o dropdown está aberto, não faça nada, deixe que o event handler assuma o controle.
-      const target = document.querySelector(".select-box");
-      if (!target.contains(e.target)) {
-        console.log('removed')
-        document.removeEventListener("click", manageClickOutside);
-        dispatch(closeDropDown(props.dropdownType));
-      }
-    } else {
-      //Se o dropdown não está aberto, dispare a ação e adicione o o event handler, parando a propagação para garantir que o mesmo não seja disparado imediatamente.
-      // if (e.target !== target)
-      console.log('added')
-      dispatch(openDropDown(props.dropdownType));
-      document.addEventListener("click", manageClickOutside);
-    }
-  };
-
   return (
     <>
-      <SelectBox className="select-handle" onClick={(e) => handleClick(e)}>
+      <SelectBox className="select-handle">
         <ToggleHandle>
           <span>{props.name}</span>
           <img src="/img/ArrowFilter.png" alt="chevron" />
         </ToggleHandle>
-        {dropdownIsOpen && (
           <SelectItems className="select-box">
             {props.populate.map((item) => (
               <div key={item.name}>
@@ -157,7 +122,6 @@ const SelectionFilterWrapper = (props) => {
               </div>
             ))}
           </SelectItems>
-        )}
       </SelectBox>
     </>
   );
@@ -170,31 +134,16 @@ const SelectionFilterWrapper = (props) => {
 // };
 
 export default function Filter() {
+  const dispatch = useDispatch();
+  const types = useSelector(state => state.pokemonTypes.value.types)
+  const typesStatus = useSelector(state => state.pokemonTypes.value.types)
+  
+  useEffect(()=>{
+    dispatch(fetchPokemonTypes())
+  }, [dispatch])
+  
   //Estado do DropDown do filter:
-  const pkmnState = useSelector((state) => state['storePkmnDataReducer']);
-
-  const typeArray = [
-    { name: "normal", url: "https://pokeapi.co/api/v2/type/1/" },
-    { name: "fighting", url: "https://pokeapi.co/api/v2/type/2/" },
-    { name: "flying", url: "https://pokeapi.co/api/v2/type/3/" },
-    { name: "poison", url: "https://pokeapi.co/api/v2/type/4/" },
-    { name: "ground", url: "https://pokeapi.co/api/v2/type/5/" },
-    { name: "rock", url: "https://pokeapi.co/api/v2/type/6/" },
-    { name: "bug", url: "https://pokeapi.co/api/v2/type/7/" },
-    { name: "ghost", url: "https://pokeapi.co/api/v2/type/8/" },
-    { name: "steel", url: "https://pokeapi.co/api/v2/type/9/" },
-    { name: "fire", url: "https://pokeapi.co/api/v2/type/10/" },
-    { name: "water", url: "https://pokeapi.co/api/v2/type/11/" },
-    { name: "grass", url: "https://pokeapi.co/api/v2/type/12/" },
-    { name: "electric", url: "https://pokeapi.co/api/v2/type/13/" },
-    { name: "psychic", url: "https://pokeapi.co/api/v2/type/14/" },
-    { name: "ice", url: "https://pokeapi.co/api/v2/type/15/" },
-    { name: "dragon", url: "https://pokeapi.co/api/v2/type/16/" },
-    { name: "dark", url: "https://pokeapi.co/api/v2/type/17/" },
-    { name: "fairy", url: "https://pokeapi.co/api/v2/type/18/" },
-    { name: "unknown", url: "https://pokeapi.co/api/v2/type/10001/" },
-    { name: "shadow", url: "https://pokeapi.co/api/v2/type/10002/" },
-  ];
+  
   const gens = [
     { name: "generation-i", url: "https://pokeapi.co/api/v2/generation/1/" },
     { name: "generation-ii", url: "https://pokeapi.co/api/v2/generation/2/" },
@@ -215,7 +164,7 @@ export default function Filter() {
           </Title>
           <FilterBar />
           <Filters>
-            <SelectionFilterWrapper key={1} name="Type" populate={pkmnState.pkmnData.pkmnTypes} dropdownType="toggleDropdownType"></SelectionFilterWrapper>
+            <SelectionFilterWrapper key={1} name="Type" populate={types} dropdownType="toggleDropdownType"></SelectionFilterWrapper>
             <SelectionFilterWrapper key={2} name="Generation" populate={gens} dropdownType="toggleDropdownGeneration"></SelectionFilterWrapper>
           </Filters>
         </div>

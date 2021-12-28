@@ -2,11 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import RootReducers from "./reducers/index.js";
-
-const store = createStore(RootReducers, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+import pokemonTypesReducer from './features/pokemonTypes.js';
+const store = configureStore({
+  reducer: { 
+    pokemonTypes: pokemonTypesReducer
+  }
+});
 
 ReactDOM.render(
   <React.StrictMode>
