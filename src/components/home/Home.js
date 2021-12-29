@@ -112,7 +112,7 @@ const HomeImage = styled.div`
   }
 `;
 
-const ButtonGreen = styled(Link)`
+export const ButtonGreen = styled(Link)`
   width: max-content;
   padding: 17px 36px 24px;
   margin-top: 1rem;

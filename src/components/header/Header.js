@@ -57,7 +57,7 @@ export default function Header() {
             Home
           </Link>
           <Link to="/pokedex">Pokedex</Link>
-          <Link to="/">Legendaries</Link>
+          <Link to="/legendary">Legendaries</Link>
         </LinkBox>
       </Container>
     </Navbar>
