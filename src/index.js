@@ -5,12 +5,14 @@ import reportWebVitals from "./reportWebVitals";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import pokemonTypesReducer from "./features/pokemonTypes.js";
+import legendaryPokemonReducer from "./features/legendaryPokemon.js";
 import dropdownReducer from "./features/dropdown.js";
 
 const store = configureStore({
   reducer: {
     dropdown: dropdownReducer,
     pokemonTypes: pokemonTypesReducer,
+    legendaryPokemon: legendaryPokemonReducer
   },
 });
 
