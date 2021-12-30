@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Header from "../components/header/Header";
 import { Container } from "../components/helpers/container";
@@ -27,6 +27,8 @@ const CallOut = styled.h1`
 
 
 function Legendary() {
+  const legendaryIds = [144, 145, 146, 150, 243, 244, 245, 249, 250]
+  useEffect(()=>{},[])
   return (
     <>
       <Header />
