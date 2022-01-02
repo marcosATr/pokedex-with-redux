@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchLegendaryPokemon = createAsyncThunk(
   "legendaryPokemon/fetchLegendaryPokemon",
   async (id) => {
-    return await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).then((res) =>
+    return await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).then((res) =>
       res.json()
     );
   }
