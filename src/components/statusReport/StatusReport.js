@@ -28,7 +28,7 @@ const StatBar = styled.div`
   position: relative;
   &::after {
     content: "";
-    background-color: var(--color-third);
+    background-color: var(--color-primary);
     position: absolute;
     z-index: 99;
     width: ${(props) => props.overallStats}%;
