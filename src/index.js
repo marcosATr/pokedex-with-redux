@@ -7,12 +7,15 @@ import { Provider } from "react-redux";
 import pokemonTypesReducer from "./features/pokemonTypes.js";
 import legendaryPokemonReducer from "./features/legendaryPokemon.js";
 import dropdownReducer from "./features/dropdown.js";
+import activeLegendaryReducer from "./features/activeLegendary.js";
+
 
 const store = configureStore({
   reducer: {
     dropdown: dropdownReducer,
     pokemonTypes: pokemonTypesReducer,
-    legendaryPokemon: legendaryPokemonReducer
+    legendaryPokemon: legendaryPokemonReducer,
+    activeLegendary: activeLegendaryReducer
   },
 });
 

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { setActiveLegendary } from "../../features/activeLegendary";
 
 const WheelHolder = styled.div`
   height: 202px;
@@ -29,6 +31,7 @@ const Card = styled.div`
   align-items: center;
   transition: all ease-in-out 300ms;
   transform: translateX(${(props) => props.translate}px);
+  cursor: pointer;
 
   img {
     width: auto;
@@ -80,23 +83,31 @@ function Wheel(props) {
   const [amount, setAmount] = useState(0);
   const [available, setAvailable] = useState(0);
 
-  const calculateAndSetAvailable = ()=>{
+  const dispatch = useDispatch();
+
+  const handleActiveChange = (id) => {
+    const active = props.legendary.find((pkmn) => pkmn.id === id);
+    console.log(active);
+    dispatch(setActiveLegendary(active))
+  };
+
+  const calculateAndSetAvailable = () => {
     const grid = document.querySelector("#grid");
     const gridWidth = grid.clientWidth;
     const visible = Math.floor(gridWidth / 200);
     setAvailable(9 - visible);
-  }
+  };
 
-  useEffect(()=>{
-    calculateAndSetAvailable()
-  },[])
-  
+  useEffect(() => {
+    calculateAndSetAvailable();
+  }, []);
+
   const handleClickRight = () => {
     if (available > 0) {
       const newAmount = amount - 200;
       setAmount(newAmount);
-      setAvailable(available-1)
-    } else if( available === 0){
+      setAvailable(available - 1);
+    } else if (available === 0) {
       const newAmount = 0;
       setAmount(newAmount);
       calculateAndSetAvailable();
@@ -106,13 +117,13 @@ function Wheel(props) {
     if (amount <= -200) {
       const newAmount = amount + 200;
       setAmount(newAmount);
-      setAvailable(available+1)
-    } else if (amount > -200 && amount !==0){
+      setAvailable(available + 1);
+    } else if (amount > -200 && amount !== 0) {
       setAmount(0);
       // setAvailable(available+1)
-    } else if(amount === 0){
-      console.log('hello')
-      const newAmount = available*(-200);
+    } else if (amount === 0) {
+      console.log("hello");
+      const newAmount = available * -200;
       setAmount(newAmount);
       setAvailable(0);
     }
@@ -124,7 +135,7 @@ function Wheel(props) {
         <Grid id="grid">
           {props.legendary.map((pkmn) => {
             return (
-              <Card key={pkmn.name} translate={amount}>
+              <Card key={pkmn.name} translate={amount} onClick={() => handleActiveChange(pkmn.id)}>
                 <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pkmn.id}.png`} alt={pkmn.name} />
                 <NameBox>
                   <span>{pkmn.name}</span>
