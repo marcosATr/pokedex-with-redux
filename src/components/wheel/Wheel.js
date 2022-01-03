@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
 
 const WheelHolder = styled.div`
   height: 202px;
@@ -29,7 +28,7 @@ const Card = styled.div`
   flex-direction: column;
   align-items: center;
   transition: all ease-in-out 300ms;
-  transform: translateX(${props => props.translate}px);
+  transform: translateX(${(props) => props.translate}px);
 
   img {
     width: auto;
@@ -67,10 +66,10 @@ const NameBox = styled.div`
   }
 `;
 const Carrousel = styled.div`
-  display:flex;
+  display: flex;
   align-items: center;
 
-  &>img {
+  & > img {
     height: 47px;
     margin: 16px;
     cursor: pointer;
@@ -79,31 +78,48 @@ const Carrousel = styled.div`
 
 function Wheel(props) {
   const [amount, setAmount] = useState(0);
-  // const grid = document.querySelector('#grid');
-  // const gridWidth = grid.clientWidth;
-  // const visible = Math.floor(gridWidth/200)
-  // const remaining = 9 - visible
+  const [available, setAvailable] = useState(0);
 
+  const calculateAndSetAvailable = ()=>{
+    const grid = document.querySelector("#grid");
+    const gridWidth = grid.clientWidth;
+    const visible = Math.floor(gridWidth / 200);
+    setAvailable(9 - visible);
+  }
 
-  const handleClickRight = () =>{
-    if (amount > -500){
-      const newAmount = amount - 200
-      setAmount(newAmount)
-    } else {
-      setAmount(-700)
+  useEffect(()=>{
+    calculateAndSetAvailable()
+  },[])
+  
+  const handleClickRight = () => {
+    if (available > 0) {
+      const newAmount = amount - 200;
+      setAmount(newAmount);
+      setAvailable(available-1)
+    } else if( available === 0){
+      const newAmount = 0;
+      setAmount(newAmount);
+      calculateAndSetAvailable();
     }
   };
-  const handleClickLeft = () =>{
-    if (amount===0 || amount >= -200){
-      setAmount(0)
-    } else {
-      const newAmount = amount + 200
-      setAmount(newAmount)
+  const handleClickLeft = () => {
+    if (amount <= -200) {
+      const newAmount = amount + 200;
+      setAmount(newAmount);
+      setAvailable(available+1)
+    } else if (amount > -200 && amount !==0){
+      setAmount(0);
+      // setAvailable(available+1)
+    } else if(amount === 0){
+      console.log('hello')
+      const newAmount = available*(-200);
+      setAmount(newAmount);
+      setAvailable(0);
     }
-  }
+  };
   return (
     <Carrousel>
-      <img src="/img/arrowLeft.png" alt="Arrow Left" onClick={handleClickLeft}/>
+      <img src="/img/arrowLeft.png" alt="Arrow Left" onClick={handleClickLeft} />
       <WheelHolder>
         <Grid id="grid">
           {props.legendary.map((pkmn) => {
