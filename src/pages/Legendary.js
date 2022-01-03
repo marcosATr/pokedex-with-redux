@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Header from "../components/header/Header";
 import { Container } from "../components/helpers/container";
 import StatusReport from "../components/statusReport/StatusReport";
+import Wheel from "../components/wheel/Wheel";
 import { fetchLegendaryPokemon } from "../features/legendaryPokemon";
 
 const Background = styled.div`
@@ -55,9 +56,7 @@ const Text = styled.p`
 function Legendary() {
   const dispatch = useDispatch();
 
-  const legendaryPokemon = useSelector(
-    (state) => state.legendaryPokemon.value.legendaryPokemon
-  );
+  const legendaryPokemon = useSelector((state) => state.legendaryPokemon.value.legendaryPokemon);
   useEffect(() => {
     const legendaryIds = [144, 145, 146, 150, 243, 244, 245, 249, 250];
     legendaryIds.forEach((id) => {
@@ -74,18 +73,17 @@ function Legendary() {
         <Container>
           <CallOut>Legendary Pokémon</CallOut>
           <CurrentPokemonBox>
-            <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${legendaryPokemon[0].id}.png`}
-              alt={`${legendaryPokemon[0].name}`}
-            />
+            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${legendaryPokemon[0].id}.png`} alt={`${legendaryPokemon[0].name}`} />
             <div>
               <Title>{legendaryPokemon[0].name}</Title>
               <Text>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
               </Text>
-              <StatusReport stats={legendaryPokemon[0].stats}/>
+              <StatusReport stats={legendaryPokemon[0].stats} />
             </div>
           </CurrentPokemonBox>
+          <Wheel legendary={legendaryPokemon}/>
         </Container>
       </Background>
     </>

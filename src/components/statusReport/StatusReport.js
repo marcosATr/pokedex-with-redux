@@ -15,7 +15,11 @@ const Stat = styled.div`
 `;
 const StatTitle = styled.div``;
 
-const StatNumber = styled.div``;
+const StatNumber = styled.div`
+  font-weight: bold;
+  margin-top: 7px;
+  margin-bottom: 7px;
+`;
 const StatBar = styled.div`
   width: 100%;
   height: 7px;
@@ -27,7 +31,7 @@ const StatBar = styled.div`
     background-color: var(--color-third);
     position: absolute;
     z-index: 99;
-    width: ${props => props.overallStats}%;
+    width: ${(props) => props.overallStats}%;
     height: 100%;
     overflow: hidden;
     border-radius: 10px;
@@ -35,8 +39,6 @@ const StatBar = styled.div`
 `;
 
 function StatusReport(props) {
-  //precisa somar todos os status report
-  // depois dividir por 6 e tirar a media
   const allStats = {
     hp: props.stats[0].base_stat,
     attack: props.stats[1].base_stat,
@@ -59,7 +61,7 @@ function StatusReport(props) {
     }
     return StatInPercentage;
   };
-  
+
   const overallStats = overallStatCalculator(allStats);
   return (
     <StatusReportHolder>
