@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const activeLegendarySlice = createSlice({
   name: "activeLegendary",
   initialState: {
-    value: 144,
+    value: {},
   },
   reducers: {
     setActiveLegendary: (state, action) => {
