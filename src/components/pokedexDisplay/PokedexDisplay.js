@@ -65,8 +65,8 @@ const Number = styled.span`
   margin: 2px auto;
 `;
 const PillHolder = styled.div`
-display:flex;
-z-index:1;
+  display: flex;
+  z-index: 1;
 `;
 const Pill = styled.span`
   background: #73d677;
@@ -85,19 +85,21 @@ const Pill = styled.span`
 export function PokedexDisplay() {
   return (
     <Container>
-      <Card>
-        <Info>
-          <Name>Charizard</Name>
-          <Number>#687</Number>
-          <PillHolder>
-            <Pill>Grass</Pill>
-            <Pill>Fire</Pill>
-          </PillHolder>
-        </Info>
-        <Highlight>
-          <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${39}.png`} alt="teste" />
-        </Highlight>
-      </Card>
+      <Grid>
+        <Card>
+          <Info>
+            <Name>Charizard</Name>
+            <Number>#687</Number>
+            <PillHolder>
+              <Pill>Grass</Pill>
+              <Pill>Fire</Pill>
+            </PillHolder>
+          </Info>
+          <Highlight>
+            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${39}.png`} alt="teste" />
+          </Highlight>
+        </Card>
+      </Grid>
     </Container>
   );
 }
