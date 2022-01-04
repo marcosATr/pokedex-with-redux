@@ -11,7 +11,6 @@ import { fetchLegendaryPokemon } from "../features/legendaryPokemon";
 const Background = styled.div`
   background-color: #212121;
   min-height: calc(100vh - 56px);
-
   @media (min-width: 768px) {
     min-height: calc(100vh - 93px);
   }
@@ -65,15 +64,16 @@ function Legendary() {
       dispatch(fetchLegendaryPokemon(id));
     });
   }, [dispatch]);
-  
-  useEffect(() => {
-    dispatch(setActiveLegendary(legendaryPokemon[0]));
-    console.log(Object.keys(activeLegendary).length)
-  }, [dispatch, legendaryPokemon,activeLegendary]);
 
+  useEffect(() => {
+    const first = legendaryPokemon[0];
+    dispatch(setActiveLegendary(first));
+  }, [dispatch, legendaryPokemon]);
 
   if (legendaryPokemon.length === 0) return null;
-  // console.log(legendaryPokemon[0].stats);
+  if (!activeLegendary) return null;
+
+  
   return (
     <>
       <Header />
@@ -81,7 +81,7 @@ function Legendary() {
         <Container>
           <CallOut>Legendary Pokémon</CallOut>
           <CurrentPokemonBox>
-            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${activeLegendary.id}.png`} alt={`${legendaryPokemon[0].name}`} />
+            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${activeLegendary.id}.png`} alt={`${activeLegendary.name}`} />
             <div>
               <Title>{activeLegendary.name}</Title>
               <Text>
