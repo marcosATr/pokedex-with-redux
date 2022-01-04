@@ -61,20 +61,20 @@ function Legendary() {
   const activeLegendary = useSelector((state) => state.activeLegendary.value);
   useEffect(() => {
     const legendaryIds = [144, 145, 146, 150, 243, 244, 245, 249, 250];
-    legendaryIds.forEach((id) => {
-      dispatch(fetchLegendaryPokemon(id));
-    });
+      legendaryIds.forEach((id) => {
+        dispatch(fetchLegendaryPokemon());
+      });
+    
   }, [dispatch]);
 
-  useEffect(() => {
-    const first = legendaryPokemon[0];
-    dispatch(setActiveLegendary(first));
-  }, [dispatch, legendaryPokemon]);
-
+  // useEffect(() => {
+  // }, [dispatch, legendaryPokemon]);
+  
   if (legendaryPokemon.length === 0) return null;
+  const first = legendaryPokemon[0];
+  dispatch(setActiveLegendary(first));
   if (!activeLegendary) return null;
 
-  
   return (
     <>
       <Header />
