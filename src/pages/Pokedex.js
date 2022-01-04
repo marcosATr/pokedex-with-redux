@@ -7,11 +7,14 @@ import { fetchPokemonList } from "../features/pokemonList";
 
 export default function Pokedex() {
   const dispatch = useDispatch();
-  const pokemonListStatus = useSelector((state) => state.pokemonList.value.status)
-  
+  const pokemonListStatus = useSelector((state) => state.pokemonList.value.status);
+  const pokemonList = useSelector((state) => state.pokemonList.value.pokemonList);
+
   useEffect(() => {
-    dispatch(fetchPokemonList(1));
-  }, [dispatch]);
+    if (pokemonListStatus === "idle") {
+      dispatch(fetchPokemonList(1));
+    }
+  }, [dispatch, pokemonListStatus]);
 
   return (
     <>
