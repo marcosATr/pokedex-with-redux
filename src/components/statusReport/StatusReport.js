@@ -35,7 +35,6 @@ const StatBar = styled.div`
     height: 100%;
     overflow: hidden;
     border-radius: 10px;
-    transition: width ease-in-out 500ms;
   }
 `;
 

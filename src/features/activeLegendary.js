@@ -7,7 +7,6 @@ export const activeLegendarySlice = createSlice({
   },
   reducers: {
     setActiveLegendary: (state, action) => {
-      // console.log(action.payload)
       state.value= action.payload
     },
   }

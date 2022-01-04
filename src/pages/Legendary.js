@@ -59,22 +59,21 @@ function Legendary() {
 
   const legendaryPokemon = useSelector((state) => state.legendaryPokemon.value.legendaryPokemon);
   const activeLegendary = useSelector((state) => state.activeLegendary.value);
-
   useEffect(() => {
-      const legendaryIds = [144, 145, 146, 150, 243, 244, 245, 249, 250];
-        legendaryIds.forEach((id) => {
-          dispatch(fetchLegendaryPokemon());
-        });
+    const legendaryIds = [144, 145, 146, 150, 243, 244, 245, 249, 250];
+    legendaryIds.forEach((id) => {
+      dispatch(fetchLegendaryPokemon(id));
+    });
   }, [dispatch]);
-
-  // useEffect(() => {
-  // }, [dispatch, legendaryPokemon]);
   
-  if (legendaryPokemon.length === 0) return null;
-  const first = legendaryPokemon[0];
-  dispatch(setActiveLegendary(first));
-  if (!activeLegendary) return null;
+  useEffect(() => {
+    dispatch(setActiveLegendary(legendaryPokemon[0]));
+    console.log(Object.keys(activeLegendary).length)
+  }, [dispatch, legendaryPokemon,activeLegendary]);
 
+
+  if (legendaryPokemon.length === 0) return null;
+  // console.log(legendaryPokemon[0].stats);
   return (
     <>
       <Header />
@@ -82,7 +81,7 @@ function Legendary() {
         <Container>
           <CallOut>Legendary Pokémon</CallOut>
           <CurrentPokemonBox>
-            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${activeLegendary.id}.png`} alt={`${activeLegendary.name}`} />
+            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${activeLegendary.id}.png`} alt={`${legendaryPokemon[0].name}`} />
             <div>
               <Title>{activeLegendary.name}</Title>
               <Text>
