@@ -82,23 +82,27 @@ const Pill = styled.span`
   margin: 0 5px;
 `;
 
-export function PokedexDisplay() {
+export function PokedexDisplay(props) {
   return (
     <Container>
       <Grid>
-        <Card>
-          <Info>
-            <Name>Charizard</Name>
-            <Number>#687</Number>
-            <PillHolder>
-              <Pill>Grass</Pill>
-              <Pill>Fire</Pill>
-            </PillHolder>
-          </Info>
-          <Highlight>
-            <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${39}.png`} alt="teste" />
-          </Highlight>
-        </Card>
+        {props.pokemonData.map((pkmn) => {
+          return (
+            <Card>
+              <Info>
+                <Name>{pkmn.name}</Name>
+                <Number>#{pkmn.id}</Number>
+                <PillHolder>
+                  <Pill>Grass</Pill>
+                  <Pill>Fire</Pill>
+                </PillHolder>
+              </Info>
+              <Highlight>
+                <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pkmn.id}.png`} alt="teste" />
+              </Highlight>
+            </Card>
+          );
+        })}
       </Grid>
     </Container>
   );
