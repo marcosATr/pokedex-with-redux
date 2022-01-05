@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Container } from "../helpers/container";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navbar = styled.div`
   width: 100%;
@@ -53,11 +53,11 @@ export default function Header() {
       <Container flexBetween>
         <img src="/img/Logo.png" alt="Pokedex Logo" />
         <LinkBox>
-          <Link to="/" className="active">
+          <NavLink to="/" activeClassName="active">
             Home
-          </Link>
-          <Link to="/pokedex">Pokedex</Link>
-          <Link to="/legendary">Legendaries</Link>
+          </NavLink>
+          <NavLink to="/pokedex" activeClassName="active">Pokedex</NavLink>
+          <NavLink to="/legendary" activeClassName="active">Legendaries</NavLink>
         </LinkBox>
       </Container>
     </Navbar>

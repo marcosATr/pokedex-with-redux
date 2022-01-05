@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import { pokemonColors } from "../helpers/colors";
 import { Container } from "../helpers/container";
 
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
+  grid-gap: 30px 10px;
 `;
 
 const Card = styled.div`
@@ -18,7 +20,7 @@ const Card = styled.div`
   display: flex;
 `;
 const Highlight = styled.div`
-  background-color: #d93e30;
+  background-color: ${props => pokemonColors[props.mainType]};
   position: absolute;
   height: 100%;
   width: 230px;
@@ -38,7 +40,7 @@ const Info = styled.div`
   /* align-items: center; */
   justify-content: space-around;
   padding: 6px;
-  max-width: 120px;
+  width: 120px;
 `;
 
 const Name = styled.span`
@@ -67,9 +69,10 @@ const Number = styled.span`
 const PillHolder = styled.div`
   display: flex;
   z-index: 1;
+  justify-content: ${props => props.types.length>1 ? 'unset' : 'center'};
 `;
 const Pill = styled.span`
-  background: #73d677;
+  background: ${props => pokemonColors[props.type]};
   box-shadow: inset 0px -2px 0px rgb(0 0 0 / 18%);
   border-radius: 7px;
   font-family: Roboto, sans-serif;
@@ -88,16 +91,17 @@ export function PokedexDisplay(props) {
       <Grid>
         {props.pokemonData.map((pkmn) => {
           return (
-            <Card>
+            <Card key={pkmn.name}>
               <Info>
                 <Name>{pkmn.name}</Name>
                 <Number>#{pkmn.id}</Number>
-                <PillHolder>
-                  <Pill>Grass</Pill>
-                  <Pill>Fire</Pill>
+                <PillHolder types={pkmn.types}>
+                  {pkmn.types.map((one) => {
+                    return <Pill key={one.type.name} type={one.type.name}>{one.type.name}</Pill>;
+                  })}
                 </PillHolder>
               </Info>
-              <Highlight>
+              <Highlight mainType={pkmn.types[0].type.name}>
                 <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pkmn.id}.png`} alt="teste" />
               </Highlight>
             </Card>

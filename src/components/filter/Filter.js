@@ -54,6 +54,7 @@ const SelectBox = styled.div`
   position: relative;
   font-size: 0.8rem;
   font-weight: normal;
+  z-index:9;
   /* height:135px; */
   /* text-align: center;
   display: flex;
