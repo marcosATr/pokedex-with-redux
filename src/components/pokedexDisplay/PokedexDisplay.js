@@ -20,7 +20,7 @@ const Card = styled.div`
   display: flex;
 `;
 const Highlight = styled.div`
-  background-color: ${props => pokemonColors[props.mainType]};
+  background-color: ${(props) => pokemonColors[props.mainType]};
   position: absolute;
   height: 100%;
   width: 230px;
@@ -69,10 +69,10 @@ const Number = styled.span`
 const PillHolder = styled.div`
   display: flex;
   z-index: 1;
-  justify-content: ${props => props.types.length>1 ? 'unset' : 'center'};
+  justify-content: ${(props) => (props.types.length > 1 ? "unset" : "center")};
 `;
 const Pill = styled.span`
-  background: ${props => pokemonColors[props.type]};
+  background: ${(props) => pokemonColors[props.type]};
   box-shadow: inset 0px -2px 0px rgb(0 0 0 / 18%);
   border-radius: 7px;
   font-family: Roboto, sans-serif;
@@ -83,6 +83,24 @@ const Pill = styled.span`
   color: white;
   display: inline-block;
   margin: 0 5px;
+`;
+const Navigation = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+`;
+const NavOption = styled.div`
+  font-family: Karla,sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: #212121;
+    border: 2px solid;
+    padding: 11px 4px;
+    border-radius: 15px;
+    text-align: center;
+    min-width: 100px;
+    margin:1rem;
+    cursor: pointer;
 `;
 
 export function PokedexDisplay(props) {
@@ -97,7 +115,11 @@ export function PokedexDisplay(props) {
                 <Number>#{pkmn.id}</Number>
                 <PillHolder types={pkmn.types}>
                   {pkmn.types.map((one) => {
-                    return <Pill key={one.type.name} type={one.type.name}>{one.type.name}</Pill>;
+                    return (
+                      <Pill key={one.type.name} type={one.type.name}>
+                        {one.type.name}
+                      </Pill>
+                    );
                   })}
                 </PillHolder>
               </Info>
@@ -108,6 +130,10 @@ export function PokedexDisplay(props) {
           );
         })}
       </Grid>
+      <Navigation>
+        {props.previous ? <NavOption onClick={()=>props.handlePrevious()}>Previous</NavOption> : null}
+        {props.next ? <NavOption onClick={()=>props.handleNext()}>Next</NavOption> : null}
+      </Navigation>
     </Container>
   );
 }
