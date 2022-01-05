@@ -22,9 +22,7 @@ export default function Pokedex() {
 
   useEffect(() => {
     if (pokemonListStatus === "success") {
-      pokemonList.forEach((pkmn) => {
-        dispatch(fetchPokemonDetails(pkmn.url));
-      });
+        dispatch(fetchPokemonDetails(pokemonList));
     }
   }, [dispatch, pokemonList, pokemonListStatus]);
 

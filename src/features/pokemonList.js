@@ -4,10 +4,17 @@ export const fetchPokemonList = createAsyncThunk("pokemonList/fetchPokemonList",
   return await fetch(url).then((res) => res.json());
 });
 
+const fetchArrFunc = async (arr) => {
+  const results = [];
+  for (const pkmn of arr) {
+    const result = await fetch(pkmn.url).then((res) => res.json());
+    results.push(result);
+  }
+  return results;
+};
 
-
-export const fetchPokemonDetails = createAsyncThunk("pokemonList/fetchPokemonDetails", async (url) => {
-  return await fetch(url).then((res) => res.json());
+export const fetchPokemonDetails = createAsyncThunk("pokemonList/fetchPokemonDetails", async (arr) => {
+  return await fetchArrFunc(arr);
 });
 
 export const pokemonListSlice = createSlice({
@@ -37,7 +44,7 @@ export const pokemonListSlice = createSlice({
     },
     [fetchPokemonDetails.fulfilled]: (state, action) => {
       // console.log(action.payload)
-      state.value.pokemonData.push(action.payload);
+      state.value.pokemonData = action.payload;
       state.value.status = "success at details";
     },
     [fetchPokemonDetails.rejected]: (state) => {
