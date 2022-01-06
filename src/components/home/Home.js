@@ -64,6 +64,7 @@ const TextContent = styled.div`
     margin-bottom: 1rem;
     strong {
       font-weight: 700;
+      font-size: 2.6rem;
     }
     @media (min-width: 992px) {
       font-size: 4.5rem;

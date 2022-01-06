@@ -14,6 +14,9 @@ const Title = styled.h2`
   margin-bottom: 1rem;
   text-align: center;
   letter-spacing: 4px;
+  strong {
+    font-size: 1.6rem;
+  }
   @media (min-width: 992px) {
     font-size: 2rem;
     letter-spacing: 4px;

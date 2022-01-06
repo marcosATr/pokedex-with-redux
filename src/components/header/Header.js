@@ -106,10 +106,12 @@ const PopNav = styled.div`
   transition: all 300ms ease-in-out;
   justify-content: space-evenly;
   z-index:10;
+  margin-top: -290px;
 
   &.menuActive {
     height: 180px;
-    transition: all 500ms ease-in-out;
+    margin-top: 0;
+    transition: all 300ms ease-in-out;
   }
 
   a {
@@ -159,11 +161,14 @@ export default function Header() {
           </HamburgerBox>
         </Container>
       </Navbar>
-      {menuStatus ? (
+      <PopNav className={menuStatus ? "menuActive" : null}>
+          <AllLinks />
+        </PopNav>
+      {/* {menuStatus ? (
         <PopNav className={menuStatus ? "menuActive" : null}>
           <AllLinks />
         </PopNav>
-      ) : null}
+      ) : null} */}
     </>
   );
 }
