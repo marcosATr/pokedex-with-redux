@@ -8,6 +8,7 @@ const GlobalStyles = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: 'Karla', sans-serif;
+    font-size:16px;
   }
 
   :root {

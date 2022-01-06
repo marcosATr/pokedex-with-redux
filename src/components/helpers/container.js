@@ -4,12 +4,13 @@ export const Container = styled.div`
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 0.5rem;
+  padding: 0.8rem;
 
 
   ${props => props.flexBetween && css`
     display: flex;
     justify-content: space-between;
+    align-items: center;
   `}
 `;
 

@@ -145,7 +145,7 @@ export default function Home() {
             Find all your favorite <strong>Pokémon</strong>
           </h1>
           <h2>Explore all types of Pokémons, its strengths, disadvantages and abilities</h2>
-          <ButtonGreen to="/">All pokémons</ButtonGreen>
+          <ButtonGreen to="/pokedex">All pokémons</ButtonGreen>
         </TextContent>
         <HomeImage>
           <img src="/img/BannerComplete.png" alt="Pikachu" />

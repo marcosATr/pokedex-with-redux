@@ -23,14 +23,18 @@ const Title = styled.h2`
   }
 `;
 
+const Spacer = styled.div`
+  margin-left: 1rem;
+  margin-right: 1rem;
+`;
+
 const FilterBar = styled.input`
   margin-top: 1rem;
   margin-bottom: 1rem;
   background-color: #f2f2f2;
   padding: 1rem 2rem;
-  box-shadow: 4px 4px 16px rgba(1, 28, 64, 0.2);
   border-radius: 40px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.25));
   font-style: normal;
   font-weight: normal;
   font-size: 1rem;
@@ -50,11 +54,11 @@ const Filters = styled.div`
 `;
 
 const SelectBox = styled.div`
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.25));
   position: relative;
   font-size: 0.8rem;
   font-weight: normal;
-  z-index:9;
+  z-index: 9;
   /* height:135px; */
   /* text-align: center;
   display: flex;
@@ -87,7 +91,7 @@ const SelectItems = styled.div`
     background-color: #f2f2f2;
     width: 8px;
   }
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.25));
   position: absolute;
   height: 200px;
   left: 0;
@@ -110,9 +114,7 @@ const SelectItems = styled.div`
 const SelectionFilterWrapper = (props) => {
   const dropdown = props.dropdown;
   const dispatch = useDispatch();
-  const dropdownStatus = useSelector(
-    (state) => state.dropdown.value[dropdown].status
-  );
+  const dropdownStatus = useSelector((state) => state.dropdown.value[dropdown].status);
 
   const manageClickOutside = () => {
     const e = window.event;
@@ -196,26 +198,16 @@ export default function Filter() {
   return (
     <>
       <Container>
-        <div>
+        <Spacer>
           <Title>
             800 <strong>Pokémons</strong> for you to choose from:
           </Title>
           <FilterBar />
           <Filters>
-            <SelectionFilterWrapper
-              key={1}
-              name="Type"
-              populate={types}
-              dropdown="dropdownType"
-            ></SelectionFilterWrapper>
-            <SelectionFilterWrapper
-              key={2}
-              name="Generation"
-              populate={gens}
-              dropdown="dropdownGeneration"
-            ></SelectionFilterWrapper>
+            <SelectionFilterWrapper key={1} name="Type" populate={types} dropdown="dropdownType"></SelectionFilterWrapper>
+            <SelectionFilterWrapper key={2} name="Generation" populate={gens} dropdown="dropdownGeneration"></SelectionFilterWrapper>
           </Filters>
-        </div>
+        </Spacer>
       </Container>
     </>
   );

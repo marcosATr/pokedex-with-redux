@@ -20,8 +20,8 @@ const CallOut = styled.h1`
   font-family: Karla, sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 72px;
-  line-height: 84px;
+  font-size: 4.5rem;
+  line-height: 5rem;
   letter-spacing: 4px;
   color: #ffffff;
   padding: 2rem;
@@ -30,15 +30,24 @@ const CallOut = styled.h1`
 
 const CurrentPokemonBox = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, 100%);
+  justify-items: center;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  img {
+    max-width:100%;
+  }
 `;
 
 const Title = styled.h1`
   font-family: Karla, sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 72px;
-  line-height: 84px;
+  font-size: 4.5rem;
+  line-height: 5rem;
   letter-spacing: 4px;
   color: #fdfdfd;
   text-transform: capitalize;
@@ -48,8 +57,8 @@ const Text = styled.p`
   font-family: Source Sans Pro, sans-serif;
   font-style: normal;
   font-weight: normal;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 1rem;
+  line-height: 1.2rem;
   color: #ffffff;
 `;
 

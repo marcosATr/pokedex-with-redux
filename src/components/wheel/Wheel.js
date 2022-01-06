@@ -73,9 +73,14 @@ const Carrousel = styled.div`
   align-items: center;
 
   & > img {
-    height: 47px;
-    margin: 16px;
+    height: 2.9rem;
     cursor: pointer;
+    &.arrowLeft {
+      margin-right: 10px;
+    }
+    &.arrowRight {
+      margin-left: 10px;
+    }
   }
 `;
 
@@ -88,7 +93,7 @@ function Wheel(props) {
   const handleActiveChange = (id) => {
     const active = props.legendary.find((pkmn) => pkmn.id === id);
     console.log(active);
-    dispatch(setActiveLegendary(active))
+    dispatch(setActiveLegendary(active));
   };
 
   const calculateAndSetAvailable = () => {
@@ -130,7 +135,7 @@ function Wheel(props) {
   };
   return (
     <Carrousel>
-      <img src="/img/arrowLeft.png" alt="Arrow Left" onClick={handleClickLeft} />
+      <img src="/img/arrowLeft.png" alt="Arrow Left" onClick={handleClickLeft} className="arrowLeft" />
       <WheelHolder>
         <Grid id="grid">
           {props.legendary.map((pkmn) => {
@@ -146,7 +151,7 @@ function Wheel(props) {
           })}
         </Grid>
       </WheelHolder>
-      <img src="/img/arrowRight.png" alt="Arrow Right" onClick={handleClickRight} />
+      <img src="/img/arrowRight.png" alt="Arrow Right" onClick={handleClickRight} className="arrowRight" />
     </Carrousel>
   );
 }
