@@ -204,7 +204,7 @@ export default function Filter() {
   const initialUrl = "https://pokeapi.co/api/v2/pokemon?limit=9&offset=0";
   const pokemonList = useSelector((state) => state.pokemonList.value.pokemonList.results);
   const selectedPokemon = useSelector((state) => state.searchStatus.value.selected);
-
+  const searchStatus = useSelector((state) => state.searchStatus.value.searching);
   useEffect(() => {
     dispatch(fetchPokemonTypes());
   }, [dispatch]);
@@ -222,16 +222,27 @@ export default function Filter() {
     { name: "generation-viii", url: "https://pokeapi.co/api/v2/generation/8/" },
   ];
 
+  useEffect(() => {
+    console.log('first uE')
+    if (selectedPokemon.length > 0) {
+      dispatch(fetchPokemonDetails(selectedPokemon));
+    }
+  }, [dispatch, selectedPokemon]);
+
   // useEffect(() => {
-  //   dispatch(fetchPokemonDetails(pokemonList));
-  // }, [dispatch, pokemonList]);
+  //   if (pokemonList) {
+  //     const selected = pokemonList.filter((pkmn) => pkmn.name.includes(searchContent.toLowerCase()));
+  //     dispatch(setSelected(selected));
+  //   }
+  // }, [dispatch, pokemonList, searchContent]);
 
   useEffect(() => {
-    if (pokemonList) {
-      const selected = pokemonList.filter((pkmn) => pkmn.name.includes(searchContent.toLowerCase()));
-      dispatch(setSelected(selected));
+    if (searchStatus) {
+      dispatch(fetchPokemonList(allUrl));
+    } else {
+      dispatch(fetchPokemonList(initialUrl));
     }
-  }, [dispatch, pokemonList, searchContent]);
+  }, [dispatch, searchStatus]);
 
   const updateSearchField = (e) => {
     dispatch(setContent(e.target.value));
@@ -242,14 +253,17 @@ export default function Filter() {
 
     if (searchContent.length === 0) {
       dispatch(setSearchStatus(false));
-      dispatch(fetchPokemonList(initialUrl));
-      
+      // dispatch(fetchPokemonList(initialUrl));
     } else {
       dispatch(setSearchStatus(true));
 
-      if (searchContent.length > 3) {
-        dispatch(fetchPokemonList(allUrl));
-        dispatch(fetchPokemonDetails(selectedPokemon))
+      if (searchContent.length > 2) {
+        // dispatch(fetchPokemonList(allUrl));
+        console.log(pokemonList)
+        if (pokemonList) {
+          const selected = pokemonList.filter((pkmn) => pkmn.name.includes(searchContent.toLowerCase()));
+          dispatch(setSelected(selected));
+        }
       } else {
         console.log("search query too small");
       }
