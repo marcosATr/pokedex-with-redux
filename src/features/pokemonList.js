@@ -17,6 +17,15 @@ export const fetchPokemonDetails = createAsyncThunk("pokemonList/fetchPokemonDet
   return await fetchArrFunc(arr);
 });
 
+export const fetchSelectedPokemon = createAsyncThunk("pokemonList/fetchSelectedPokemon", async (name, { dispatch }) => {
+  const allUrl = "https://pokeapi.co/api/v2/pokemon?limit=699&offset=0";
+  const res = await fetch(allUrl).then((res) => res.json());
+  const result = res.results;
+
+  const selected = result.filter((pkmn) => pkmn.name.includes(name));
+  await dispatch(fetchPokemonDetails(selected));
+});
+
 export const pokemonListSlice = createSlice({
   name: "pokemonList",
   initialState: {

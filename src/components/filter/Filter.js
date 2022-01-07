@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPokemonTypes } from "../../features/pokemonTypes";
 import { close, open } from "../../features/dropdown";
-import { setContent, setSearchStatus, setSelected } from "../../features/searchStatus";
-import { fetchPokemonDetails, fetchPokemonList } from "../../features/pokemonList";
+import { setContent, setSearchStatus } from "../../features/searchStatus";
+import { fetchPokemonList, fetchSelectedPokemon } from "../../features/pokemonList";
 
 //https://pokeapi.co/api/v2/type/
 const Title = styled.h2`
@@ -47,8 +47,14 @@ const FilterBar = styled.div`
   border: none;
   height: 53px;
   width: 100%;
+
   form {
     display: flex;
+    border-radius: 40px;
+    height: 100%;
+    &:focus-within {
+      outline: auto;
+    }
   }
 
   input[type="text"] {
@@ -58,6 +64,9 @@ const FilterBar = styled.div`
     border: none;
     padding: 1rem 2rem;
     border-radius: 40px 0 0 40px;
+    &:focus {
+      outline: none;
+    }
   }
   input[type="submit"] {
     background: #dfdfdf;
@@ -65,11 +74,11 @@ const FilterBar = styled.div`
     padding: 10px 28px;
     border-radius: 40px;
     margin: 6px;
-    color: #848484;
+    color: #666565;
     font-size: 0.8rem;
     text-transform: uppercase;
     cursor: pointer;
-    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
+    filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.15));
   }
 `;
 
@@ -200,11 +209,8 @@ export default function Filter() {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.pokemonTypes.value.types);
   const searchContent = useSelector((state) => state.searchStatus.value.content);
-  const allUrl = "https://pokeapi.co/api/v2/pokemon?limit=699&offset=0";
   const initialUrl = "https://pokeapi.co/api/v2/pokemon?limit=9&offset=0";
-  const pokemonList = useSelector((state) => state.pokemonList.value.pokemonList.results);
-  const selectedPokemon = useSelector((state) => state.searchStatus.value.selected);
-  const searchStatus = useSelector((state) => state.searchStatus.value.searching);
+
   useEffect(() => {
     dispatch(fetchPokemonTypes());
   }, [dispatch]);
@@ -222,48 +228,20 @@ export default function Filter() {
     { name: "generation-viii", url: "https://pokeapi.co/api/v2/generation/8/" },
   ];
 
-  useEffect(() => {
-    console.log('first uE')
-    if (selectedPokemon.length > 0) {
-      dispatch(fetchPokemonDetails(selectedPokemon));
-    }
-  }, [dispatch, selectedPokemon]);
-
-  // useEffect(() => {
-  //   if (pokemonList) {
-  //     const selected = pokemonList.filter((pkmn) => pkmn.name.includes(searchContent.toLowerCase()));
-  //     dispatch(setSelected(selected));
-  //   }
-  // }, [dispatch, pokemonList, searchContent]);
-
-  useEffect(() => {
-    if (searchStatus) {
-      dispatch(fetchPokemonList(allUrl));
-    } else {
-      dispatch(fetchPokemonList(initialUrl));
-    }
-  }, [dispatch, searchStatus]);
-
   const updateSearchField = (e) => {
     dispatch(setContent(e.target.value));
   };
   const search = (e) => {
     e.preventDefault();
-    // console.log(searchContent);
 
     if (searchContent.length === 0) {
+      dispatch(fetchPokemonList(initialUrl));
       dispatch(setSearchStatus(false));
-      // dispatch(fetchPokemonList(initialUrl));
     } else {
       dispatch(setSearchStatus(true));
 
       if (searchContent.length > 2) {
-        // dispatch(fetchPokemonList(allUrl));
-        console.log(pokemonList)
-        if (pokemonList) {
-          const selected = pokemonList.filter((pkmn) => pkmn.name.includes(searchContent.toLowerCase()));
-          dispatch(setSelected(selected));
-        }
+        dispatch(fetchSelectedPokemon(searchContent));
       } else {
         console.log("search query too small");
       }
@@ -279,7 +257,7 @@ export default function Filter() {
           </Title>
           <FilterBar>
             <form onSubmit={(e) => search(e)}>
-              <input type="text" value={searchContent} onChange={(e) => updateSearchField(e)} />
+              <input type="text" value={searchContent} onChange={(e) => updateSearchField(e)} placeholder="Type at least 3 letters" />
               <input type="submit" value="Search" />
             </form>
           </FilterBar>
