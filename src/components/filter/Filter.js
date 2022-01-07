@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPokemonTypes } from "../../features/pokemonTypes";
 import { close, open } from "../../features/dropdown";
+import { setContent } from "../../features/searchStatus";
 
 //https://pokeapi.co/api/v2/type/
 const Title = styled.h2`
@@ -31,13 +32,12 @@ const Spacer = styled.div`
   margin-right: 1rem;
 `;
 
-const FilterBar = styled.input`
+const FilterBar = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
   background-color: #f2f2f2;
-  padding: 1rem 2rem;
   border-radius: 40px;
-  filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.25));
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
   font-style: normal;
   font-weight: normal;
   font-size: 1rem;
@@ -46,7 +46,32 @@ const FilterBar = styled.input`
   border: none;
   height: 53px;
   width: 100%;
+  form {
+    display: flex;
+  }
+
+  input[type="text"] {
+    height: 100%;
+    width: 100%;
+    background-color: #f2f2f2;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 40px 0 0 40px;
+  }
+  input[type="submit"] {
+    background: #dfdfdf;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 40px;
+    margin: 6px;
+    color: #848484;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
+  }
 `;
+
 const Filters = styled.div`
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -57,7 +82,7 @@ const Filters = styled.div`
 `;
 
 const SelectBox = styled.div`
-  filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.25));
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
   position: relative;
   font-size: 0.8rem;
   font-weight: normal;
@@ -94,7 +119,7 @@ const SelectItems = styled.div`
     background-color: #f2f2f2;
     width: 8px;
   }
-  filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.25));
+  filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.25));
   position: absolute;
   height: 200px;
   left: 0;
@@ -179,7 +204,7 @@ const SelectionFilterWrapper = (props) => {
 export default function Filter() {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.pokemonTypes.value.types);
-  // const typesStatus = useSelector((state) => state.pokemonTypes.value.types);
+  const searchContent = useSelector((state) => state.searchStatus.value.content);
 
   useEffect(() => {
     dispatch(fetchPokemonTypes());
@@ -198,6 +223,14 @@ export default function Filter() {
     { name: "generation-viii", url: "https://pokeapi.co/api/v2/generation/8/" },
   ];
 
+  const updateSearchField = (e) => {
+    dispatch(setContent(e.target.value));
+  };
+  const search = (e) => {
+    e.preventDefault();
+    console.log(searchContent);
+  };
+
   return (
     <>
       <Container>
@@ -205,7 +238,12 @@ export default function Filter() {
           <Title>
             800 <strong>Pokémons</strong> for you to choose from:
           </Title>
-          <FilterBar />
+          <FilterBar>
+            <form onSubmit={(e) => search(e)}>
+              <input type="text" value={searchContent} onChange={(e) => updateSearchField(e)} />
+              <input type="submit" value="Search" />
+            </form>
+          </FilterBar>
           <Filters>
             <SelectionFilterWrapper key={1} name="Type" populate={types} dropdown="dropdownType"></SelectionFilterWrapper>
             <SelectionFilterWrapper key={2} name="Generation" populate={gens} dropdown="dropdownGeneration"></SelectionFilterWrapper>
