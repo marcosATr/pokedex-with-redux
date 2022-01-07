@@ -228,7 +228,7 @@ export default function Filter() {
 
   useEffect(() => {
     if (pokemonList) {
-      const selected = pokemonList.filter((pkmn) => pkmn.name.includes(searchContent));
+      const selected = pokemonList.filter((pkmn) => pkmn.name.includes(searchContent.toLowerCase()));
       dispatch(setSelected(selected));
     }
   }, [dispatch, pokemonList, searchContent]);
