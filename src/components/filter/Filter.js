@@ -217,16 +217,16 @@ export default function Filter() {
 
   //Estado do DropDown do filter:
 
-  const gens = [
-    { name: "generation-i", url: "https://pokeapi.co/api/v2/generation/1/" },
-    { name: "generation-ii", url: "https://pokeapi.co/api/v2/generation/2/" },
-    { name: "generation-iii", url: "https://pokeapi.co/api/v2/generation/3/" },
-    { name: "generation-iv", url: "https://pokeapi.co/api/v2/generation/4/" },
-    { name: "generation-v", url: "https://pokeapi.co/api/v2/generation/5/" },
-    { name: "generation-vi", url: "https://pokeapi.co/api/v2/generation/6/" },
-    { name: "generation-vii", url: "https://pokeapi.co/api/v2/generation/7/" },
-    { name: "generation-viii", url: "https://pokeapi.co/api/v2/generation/8/" },
-  ];
+  // const gens = [
+  //   { name: "generation-i", url: "https://pokeapi.co/api/v2/generation/1/" },
+  //   { name: "generation-ii", url: "https://pokeapi.co/api/v2/generation/2/" },
+  //   { name: "generation-iii", url: "https://pokeapi.co/api/v2/generation/3/" },
+  //   { name: "generation-iv", url: "https://pokeapi.co/api/v2/generation/4/" },
+  //   { name: "generation-v", url: "https://pokeapi.co/api/v2/generation/5/" },
+  //   { name: "generation-vi", url: "https://pokeapi.co/api/v2/generation/6/" },
+  //   { name: "generation-vii", url: "https://pokeapi.co/api/v2/generation/7/" },
+  //   { name: "generation-viii", url: "https://pokeapi.co/api/v2/generation/8/" },
+  // ];
 
   const updateSearchField = (e) => {
     dispatch(setContent(e.target.value));
@@ -263,7 +263,7 @@ export default function Filter() {
           </FilterBar>
           <Filters>
             <SelectionFilterWrapper key={1} name="Type" populate={types} dropdown="dropdownType"></SelectionFilterWrapper>
-            <SelectionFilterWrapper key={2} name="Generation" populate={gens} dropdown="dropdownGeneration"></SelectionFilterWrapper>
+            {/* <SelectionFilterWrapper key={2} name="Generation" populate={gens} dropdown="dropdownGeneration"></SelectionFilterWrapper> */}
           </Filters>
         </Spacer>
       </Container>
