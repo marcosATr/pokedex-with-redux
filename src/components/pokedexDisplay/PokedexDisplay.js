@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { pokemonColors } from "../helpers/colors";
 import { Container } from "../helpers/container";
@@ -108,6 +109,7 @@ const NavOption = styled.div`
 `;
 
 export function PokedexDisplay(props) {
+  const searchStatus = useSelector((state) => state.searchStatus.value.searching);
   return (
     <Container>
       <Grid>
@@ -135,8 +137,8 @@ export function PokedexDisplay(props) {
         })}
       </Grid>
       <Navigation>
-        {props.previous ? <NavOption onClick={()=>props.handlePrevious()}>Previous</NavOption> : null}
-        {props.next ? <NavOption onClick={()=>props.handleNext()}>Next</NavOption> : null}
+        {props.previous && !searchStatus ? <NavOption onClick={()=>props.handlePrevious()}>Previous</NavOption> : null}
+        {props.next && !searchStatus ? <NavOption onClick={()=>props.handleNext()}>Next</NavOption> : null}
       </Navigation>
     </Container>
   );

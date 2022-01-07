@@ -7,7 +7,7 @@ export const searchStatusSlice = createSlice({
       searching: false,
       inputManipulated: false,
       content: "",
-      filtering: false,
+      selected: [],
     },
   },
   reducers: {
@@ -19,9 +19,12 @@ export const searchStatusSlice = createSlice({
     },
     setContent: (state, action) => {
       state.value.content = action.payload
+    },
+    setSelected: (state, action) => {
+      state.value.selected = action.payload
     }
   }
 });
 
 export default searchStatusSlice.reducer;
-export const {setSearchStatus, setContent, setInputManipulation} = searchStatusSlice.actions
+export const {setSearchStatus, setContent, setSelected} = searchStatusSlice.actions

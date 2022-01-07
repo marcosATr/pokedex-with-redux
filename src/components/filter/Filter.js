@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPokemonTypes } from "../../features/pokemonTypes";
 import { close, open } from "../../features/dropdown";
-import { setContent } from "../../features/searchStatus";
+import { setContent, setSearchStatus, setSelected } from "../../features/searchStatus";
+import { fetchPokemonDetails, fetchPokemonList } from "../../features/pokemonList";
 
 //https://pokeapi.co/api/v2/type/
 const Title = styled.h2`
@@ -195,16 +196,14 @@ const SelectionFilterWrapper = (props) => {
   );
 };
 
-//fetch
-// const getTypes = async () => {
-//   const types = await fetch("https://pokeapi.co/api/v2/type/").then((res) => res.json());
-//   return types;
-// };
-
 export default function Filter() {
   const dispatch = useDispatch();
   const types = useSelector((state) => state.pokemonTypes.value.types);
   const searchContent = useSelector((state) => state.searchStatus.value.content);
+  const allUrl = "https://pokeapi.co/api/v2/pokemon?limit=699&offset=0";
+  const initialUrl = "https://pokeapi.co/api/v2/pokemon?limit=9&offset=0";
+  const pokemonList = useSelector((state) => state.pokemonList.value.pokemonList.results);
+  const selectedPokemon = useSelector((state) => state.searchStatus.value.selected);
 
   useEffect(() => {
     dispatch(fetchPokemonTypes());
@@ -223,12 +222,38 @@ export default function Filter() {
     { name: "generation-viii", url: "https://pokeapi.co/api/v2/generation/8/" },
   ];
 
+  // useEffect(() => {
+  //   dispatch(fetchPokemonDetails(pokemonList));
+  // }, [dispatch, pokemonList]);
+
+  useEffect(() => {
+    if (pokemonList) {
+      const selected = pokemonList.filter((pkmn) => pkmn.name.includes(searchContent));
+      dispatch(setSelected(selected));
+    }
+  }, [dispatch, pokemonList, searchContent]);
+
   const updateSearchField = (e) => {
     dispatch(setContent(e.target.value));
   };
   const search = (e) => {
     e.preventDefault();
-    console.log(searchContent);
+    // console.log(searchContent);
+
+    if (searchContent.length === 0) {
+      dispatch(setSearchStatus(false));
+      dispatch(fetchPokemonList(initialUrl));
+      
+    } else {
+      dispatch(setSearchStatus(true));
+
+      if (searchContent.length > 3) {
+        dispatch(fetchPokemonList(allUrl));
+        dispatch(fetchPokemonDetails(selectedPokemon))
+      } else {
+        console.log("search query too small");
+      }
+    }
   };
 
   return (
