@@ -241,7 +241,7 @@ export default function Filter() {
       dispatch(setSearchStatus(true));
 
       if (searchContent.length > 2) {
-        dispatch(fetchSelectedPokemon(searchContent));
+        dispatch(fetchSelectedPokemon(searchContent.toLowerCase()));
       } else {
         console.log("search query too small");
       }
