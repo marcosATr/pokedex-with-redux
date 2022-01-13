@@ -24,6 +24,7 @@ Animações nos status e no Carousel (Não estavam no design original).
 
 Componentes reutilizáveis, com estados independentes.
 
+
 ![Filters](https://i.imgur.com/tBHAA3b.png)
 
 -----
