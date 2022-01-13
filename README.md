@@ -11,7 +11,9 @@ Você pode visitar o resultado final aqui: [Pokédex com Redux](https://serene-w
 - Tecnologias:
 - 
   React
+
   Styled Components
+
   Redux: para gerenciar os estados que precisam ser globais. Thunks para fazer chamadas assíncronas. 
 
 - Layout responsivo.
