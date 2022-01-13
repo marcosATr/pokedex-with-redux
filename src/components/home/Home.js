@@ -154,7 +154,7 @@ export default function Home() {
       </ContainerFlex>
       <ContainerPushedToBottom>
         <div>
-          <p>Made with ❤️.</p>
+          <p>Made with ❤️ by <a href="https://github.com/marcosATr">marcosATr</a>.</p>
         </div>
       </ContainerPushedToBottom>
     </BackgroundHome>

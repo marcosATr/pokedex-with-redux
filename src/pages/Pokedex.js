@@ -13,7 +13,7 @@ export default function Pokedex() {
   const previous = useSelector((state) => state.pokemonList.value.pokemonList.previous);
   const next = useSelector((state) => state.pokemonList.value.pokemonList.next);
   const initialUrl = 'https://pokeapi.co/api/v2/pokemon?limit=9&offset=0'
-
+  const searchStatus = useSelector((state) => state.searchStatus.value.searching);
   useEffect(() => {
     if (pokemonListStatus === "idle") {
       dispatch(fetchPokemonList(initialUrl));
@@ -21,10 +21,10 @@ export default function Pokedex() {
   }, [dispatch, pokemonListStatus]);
 
   useEffect(() => {
-    if (pokemonListStatus === "success") {
+    if (pokemonListStatus === "success" && searchStatus===false) {
         dispatch(fetchPokemonDetails(pokemonList));
     }
-  }, [dispatch, pokemonList, pokemonListStatus]);
+  }, [dispatch, pokemonList, pokemonListStatus, searchStatus]);
 
   const handlePrevious = () => {
     dispatch(fetchPokemonList(previous));

@@ -1,26 +1,33 @@
-#Pokedex - Managing Global States with Redux
+#Pokedex - Gerenciando estados globais com redux
 
+Nota: Esse projeto foi inspirado pelo design de [Emmanuel García](https://www.figma.com/community/file/893705420616737018?preview=fullscreen).
 
-This project is in development. 
+> A ideia surgiu a partir da vontade de transformar um design da comunidade do figma em realidade e aprender alguma tecnologia nova. Por isso, optei por aprender e utilizar Redux (thunks e toolkit).
 
-##Highlights:
+Você pode visitar o resultado final aqui: [Pokédex com Redux](https://serene-wright-e2f86e.netlify.app/)
 
-Responsive Layout
+##Destaques:
+
+- Layout responsivo.
 ![Homepage](https://i.imgur.com/Yet7uHB.png)
 
-Responsive Css Grid.
-Api calls kept at minimum possible.
+
+- Chamadas api inteligentes, evitando sobrecarga desnecessária na api pública.
 
 ![Project Image 1](https://i.imgur.com/4kIuFZM.png)
 
-Aninated status and Carousel
+
+- Animações nos status e no Carousel (Não estavam no design original).
+
 ![Aninated status and Carousel](https://i.imgur.com/slshQ1S.png)
 
 
-Reusbale components with "click outside" awareness.
+- Componentes reutilizáveis, com estados independentes.
+
+
 ![Filters](https://i.imgur.com/tBHAA3b.png)
 
 -----
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Esse projeto é uma iniciativa própria. Não faz parte de nenhum curso ou programa de qualificação.
 

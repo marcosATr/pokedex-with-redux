@@ -9,6 +9,7 @@ import legendaryPokemonReducer from "./features/legendaryPokemon.js";
 import dropdownReducer from "./features/dropdown.js";
 import activeLegendaryReducer from "./features/activeLegendary.js";
 import pokemonListReducer from "./features/pokemonList.js"
+import searchStatusReducer from "./features/searchStatus.js"
 
 const store = configureStore({
   reducer: {
@@ -16,7 +17,8 @@ const store = configureStore({
     pokemonTypes: pokemonTypesReducer,
     legendaryPokemon: legendaryPokemonReducer,
     activeLegendary: activeLegendaryReducer,
-    pokemonList: pokemonListReducer
+    pokemonList: pokemonListReducer,
+    searchStatus: searchStatusReducer
   },
 });
 
