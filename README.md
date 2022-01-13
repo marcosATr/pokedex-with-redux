@@ -17,12 +17,12 @@ Você pode visitar o resultado final aqui: [Pokédex com Redux](https://serene-w
 ![Project Image 1](https://i.imgur.com/4kIuFZM.png)
 
 
-Animações nos status e no Carousel (Não estavam no design original).
+- Animações nos status e no Carousel (Não estavam no design original).
 
 ![Aninated status and Carousel](https://i.imgur.com/slshQ1S.png)
 
 
-Componentes reutilizáveis, com estados independentes.
+- Componentes reutilizáveis, com estados independentes.
 
 
 ![Filters](https://i.imgur.com/tBHAA3b.png)
