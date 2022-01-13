@@ -2,7 +2,7 @@
 
 Nota: Esse projeto foi inspirado pelo design de [Emmanuel García](https://www.figma.com/community/file/893705420616737018?preview=fullscreen).
 
-> A ideia surgiu a partir da vontade de transformar um design da comunidade do figma em realidade e aprender alguma tecnologia nova. Por isso, optei por aprender e utilizar Redux (thunks e toolkit).
+> A ideia surgiu a partir da vontade de transformar um design da comunidade do figma em realidade e aprender alguma tecnologia nova. Por isso, optei por me aventurar pelo Redux pela primeira vez 😍 . 
 
 Você pode visitar o resultado final aqui: [Pokédex com Redux](https://serene-wright-e2f86e.netlify.app/)
 
