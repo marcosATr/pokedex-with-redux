@@ -14,7 +14,6 @@ Você pode visitar o resultado final aqui: [Pokédex com Redux](https://serene-w
 
 - Chamadas api inteligentes, evitando sobrecarga desnecessária na api pública.
 
-
 ![Project Image 1](https://i.imgur.com/4kIuFZM.png)
 
 
@@ -24,6 +23,7 @@ Animações nos status e no Carousel (Não estavam no design original).
 
 
 Componentes reutilizáveis, com estados independentes.
+
 ![Filters](https://i.imgur.com/tBHAA3b.png)
 
 -----
